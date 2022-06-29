@@ -1,0 +1,176 @@
+-- M.base_30 = {
+--   white = "#c7b89d",
+--   darker_black = "#1a1d1e",
+--   black = "#1e2122", --  nvim bg
+--   black2 = "#232627",
+--   one_bg = "#282b2c",
+--   one_bg2 = "#393c3d",
+--   one_bg3 = "#404344",
+--   grey = "#484b4c",
+--   grey_fg = "#575a5b",
+--   grey_fg2 = "#545758",
+--   light_grey = "#5a5d5e",
+--   red = "#ec6b64",
+--   baby_pink = "#ce8196",
+--   pink = "#ff75a0",
+--   line = "#2c2f30", -- for lines like vertsplit
+--   green = "#89b482",
+--   vibrant_green = "#a9b665",
+--   nord_blue = "#6f8faf",
+--   blue = "#6d8dad",
+--   yellow = "#d6b676",
+--   sun = "#d1b171",
+--   purple = "#b4bbc8",
+--   dark_purple = "#cc7f94",
+--   teal = "#749689",
+--   orange = "#e78a4e",
+--   cyan = "#82b3a8",
+--   statusline_bg = "#222526",
+--   lightbg = "#2d3031",
+--   lightbg2 = "#252829",
+--   pmenu_bg = "#89b482",
+--   folder_bg = "#6d8dad",
+-- }
+
+-- M.base_16 = {
+--   base0A = "#e0c080",
+--   base04 = "#d4be98",
+--   base07 = "#c7b89d",
+--   base05 = "#c0b196",
+--   base0E = "#d3869b",
+--   base0D = "#7daea3",
+--   base0C = "#86b17f",
+--   base0B = "#a9b665",
+--   base02 = "#36393a",
+--   base0F = "#d65d0e",
+--   base03 = "#404344",
+--   base08 = "#ec6b64",
+--   base01 = "#2c2f30",
+--   base00 = "#1e2122",
+--   base09 = "#e78a4e",
+--   base06 = "#c3b499",
+-- }
+
+--local base16 = require("base16")
+--
+--local colors = {
+--	"#1e2122",
+--	"#2c2f30",
+--	"#36393a",
+--	"#404344",
+--	"#d4be98",
+--	"#c0b196",
+--	"#c3b499",
+--	"#c7b89d",
+--	"#ec6b64",
+--	"#e78a4e",
+--	"#e0c080",
+--	"#a9b665",
+--	"#86b17f",
+--	"#7daea3",
+--	"#d3869b",
+--	"#d65d0e",
+--}
+--
+--_G.paradise_dark = base16.theme_from_array({
+--	"1e2122",
+--	"2c2f30",
+--	"36393a",
+--	"404344",
+--	"d4be98",
+--	"c0b196",
+--	"c3b499",
+--	"c7b89d",
+--	"ec6b64",
+--	"e78a4e",
+--	"e0c080",
+--	"a9b665",
+--	"86b17f",
+--	"7daea3",
+--	"d3869b",
+--	"d65d0e",
+--})
+--base16(_G.paradise_dark, true)
+--
+--vim.api.nvim_command([[
+--  exe "hi StatusInactive guibg=background guifg=".g:terminal_color_8
+--  exe "hi StatusNormal guifg=background guibg=".g:terminal_color_2
+--  exe "hi StatusReplace guifg=background guibg=".g:terminal_color_1
+--  exe "hi StatusInsert guifg=background guibg=".g:terminal_color_2
+--  exe "hi StatusCommand guifg=background guibg=".g:terminal_color_3
+--  exe "hi StatusVisual guifg=background guibg=".g:terminal_color_4
+--  exe "hi StatusTerminal guifg=background guibg=".g:terminal_color_5
+--
+--  exe "hi FocusedSymbol guifg=".g:terminal_color_4
+--  exe "hi NeoTreeModified guifg=".g:terminal_color_9
+--  exe "hi NeoTreeIndentMarker guifg=".g:terminal_color_8
+--  exe "hi NeoTreeGitAdded guifg=".g:terminal_color_2
+--  exe "hi NeoTreeGitDeleted guifg=".g:terminal_color_9
+--  exe "hi NeoTreeGitRenamed guifg=".g:terminal_color_13
+--  exe "hi NeoTreeGitConflict guifg=".g:terminal_color_3
+--  exe "hi NeoTreeGitUntracked guifg=".g:terminal_color_9
+--  exe "hi NeoTreeGitModified guifg=".g:terminal_color_3
+--
+--  exe "hi CmpItemKindFunction guibg=NONE guifg=".g:terminal_color_15
+--  exe "hi CmpItemKindMethod guibg=NONE guifg=".g:terminal_color_15
+--  exe "hi CmpItemKindVariable guibg=NONE guifg=".g:terminal_color_14
+--  exe "hi CmpItemKindKeyword guibg=NONE guifg=".g:terminal_color_5
+--  exe "hi CmpItemKindText guifg=".g:terminal_color_10
+--  exe "hi CmpItemKindConstructor guifg=".g:terminal_color_11
+--  exe "hi CmpItemKindField guifg=".g:terminal_color_14
+--  exe "hi CmpItemKindClass guifg=".g:terminal_color_10
+--  exe "hi CmpItemKindInterface guifg=".g:terminal_color_10
+--  exe "hi CmpItemKindModule guifg=".g:terminal_color_14
+--  exe "hi CmpItemKindProperty guifg=".g:terminal_color_14
+--  exe "hi CmpItemKindValue guifg=".g:terminal_color_10
+--  exe "hi CmpItemKindEnum guifg=".g:terminal_color_10
+--  exe "hi CmpItemKindSnippet guifg=".g:terminal_color_12
+--  exe "hi CmpItemKindFile guifg=".g:terminal_color_14
+--  exe "hi CmpItemKindEnumMember guifg=".g:terminal_color_14
+--  exe "hi CmpItemKindConstant guifg=".g:terminal_color_11
+--  exe "hi CmpItemKindStruct guifg=".g:terminal_color_10
+--  exe "hi CmpItemKindTypeParameter guifg=".g:terminal_color_10
+--
+--  exe "hi DiagnosticError guifg=".g:terminal_color_9
+--  exe "hi DiagnosticWarn guifg=".g:terminal_color_3
+--  exe "hi DiagnosticInfo guifg=".g:terminal_color_14
+--  exe "hi DiagnosticHint guifg=".g:terminal_color_12
+--
+--  exe "hi Hlargs guifg=".g:terminal_color_1
+--
+--  hi EndOfBuffer guifg=background
+--  hi LineNr guibg=background
+--  hi LineNr guifg=#424242
+--  hi SignColumn guibg=background
+--  hi VertSplit guibg=background
+--
+--  hi! link TabLineSel StatusInsert
+--  hi TabLine guibg=#1f1f1f
+--  hi TabLine guifg=#525252
+--  hi TabLineFill guibg=background
+--
+--  hi FoldColumn guibg=background
+--  hi DiffAdd guibg=background
+--  hi DiffChange guibg=background
+--  hi DiffDelete guibg=background
+--  hi DiffText guibg=background
+--
+--  hi Pmenu guibg=background guifg=#424242
+--  hi PmenuSbar guibg=background guifg=#151515
+--  hi PmenuThumb guibg=#424242 guifg=#242424
+--  hi PmenuSel guibg=#242424 guifg=#BBB6B6
+--
+--  hi CmpItemAbbrMatch guifg=#e8e3e3
+--  hi CmpItemAbbrMatchFuzzy guifg=#e8e3e3
+--  hi CmpItemAbbr guifg=#424242
+--  hi CmpBorder guifg=#424242
+--  hi CmpItemMenu guifg=#888888
+--
+--  hi NormalFloat guifg=#e8e3e3
+--  hi NormalFloat guibg=none
+--
+--  hi WinSeparator guifg=#1f1f1f
+--]])
+
+vim.opt.background = "dark" -- or "light" for light mode
+vim.cmd([[colorscheme gruvbox]])
