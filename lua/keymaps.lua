@@ -90,7 +90,6 @@ keymap("n", "<C-t>", "<cmd>lua vim.lsp.buf.document_symbol()<cr>", opts)
 keymap("n", "<leader>sl", "<cmd>vsplit<cr>", opts)
 keymap("n", "<leader>sj", "<cmd>split<cr>", opts)
 keymap("n", "<C-z>", "<cmd>TZMinimalist<cr>", opts)
-keymap("n", "<c-n>", ":e ~/Notes/<cr>", opts)
 
 keymap("n", "-", ":lua require'lir.float'.toggle()<cr>", opts)
 
