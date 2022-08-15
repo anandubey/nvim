@@ -37,7 +37,7 @@ keymap("n", "<C-S-l>", "<cmd>vertical resize +2<CR>", opts)
 -- Buffers
 keymap("n", "<S-l>", ":BufferLineCycleNext<CR>", opts)
 keymap("n", "<S-h>", ":BufferLineCyclePrev<CR>", opts)
-keymap("n", "Q", "<cmd>Bdelete!<CR>", opts)
+keymap("n", "Q", "<cmd>:Bdelete! this<CR>", opts)
 keymap("n", "<leader>1", "<cmd>BufferLineGoToBuffer 1<CR>", opts)
 keymap("n", "<leader>2", "<cmd>BufferLineGoToBuffer 2<CR>", opts)
 keymap("n", "<leader>3", "<cmd>BufferLineGoToBuffer 3<CR>", opts)

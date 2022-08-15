@@ -11,15 +11,26 @@ if fn.empty(fn.glob(install_path)) > 0 then
 		"https://github.com/wbthomason/packer.nvim",
 		install_path,
 	})
-	print("Installing packer close and reopen Neovim...")
+	print "Installing packer close and reopen Neovim..."
 	vim.api.nvim_command('packadd packer.nvim')
 end
+
+
+-- Autocommand that reloads neovim whenever you save the plugins.lua file
+vim.cmd [[
+  augroup packer_user_config
+    autocmd!
+    autocmd BufWritePost plugins.lua source <afile> | PackerSync
+  augroup end
+]]
+
 
 -- Use a protected call so we don't error out on first use
 local status_ok, packer = pcall(require, "packer")
 if not status_ok then
 	return
 end
+
 
 -- Have packer use a popup window
 packer.init({
@@ -36,36 +47,44 @@ packer.init({
 })
 
 
+-- Install the plugins
 return packer.startup(function(use)
 
-    use("nvim-lua/plenary.nvim")
-
-	use({
+    -- General Plugins
+    use { "wbthomason/packer.nvim", event = "VimEnter" }  -- Plugin manager
+    use { "nvim-lua/plenary.nvim" }  -- Lua functions used by various plugins
+	use {
 		"lewis6991/impatient.nvim",
 		config = function()
 			require("impatient")
 		end,
-	})
-  
-    -- Plugin manager
-    use({ "wbthomason/packer.nvim", enent = "VimEnter" })
-
-    -- Colorscheme
-    use { "ellisonleao/gruvbox.nvim" }
-    
-    -- File Icons
-    use 'kyazdani42/nvim-web-devicons'
-
-    -- Dashboard
-    use({
-        "goolord/alpha-nvim",
+	}  -- Lazy load plugins
+    use ({
+        "windwp/nvim-autopairs",
         config = function()
-            require("plugins.configs.alpha")
-        end,
-    })
-
-    -- File Explorer
+			require("plugins.configs.autopairs")
+		end,
+    }) -- generate autopairs
+    use { "numToStr/Comment.nvim" }  -- Better way to comment 
+    use { "kyazdani42/nvim-web-devicons" }  -- File Icons
     use({
+		"akinsho/bufferline.nvim",
+		after = "nvim-web-devicons",
+        event = "BufWinEnter",
+		config = function()
+			require("plugins.configs.bufferline")
+		end,
+	}) -- Bufferline
+    use { "kazhala/close-buffers.nvim" }  -- Close multiple buffers based on conditons
+    use {
+        "feline-nvim/feline.nvim",
+        after = "nvim-web-devicons",
+        event = "BufRead",
+        config = function()
+            require("plugins.configs.feline")
+        end,
+    }  -- Status line at bottom
+    use {
         "nvim-neo-tree/neo-tree.nvim",
         after = "alpha-nvim",
         branch = "v2.x",
@@ -75,124 +94,8 @@ return packer.startup(function(use)
         config = function()
             require("plugins.configs.neotree")
         end,
-    })
-
-    -- Status line at bottom
-    use ({
-        "feline-nvim/feline.nvim",
-        after = "nvim-web-devicons",
-        event = "BufRead",
-        config = function()
-            require("plugins.configs.feline")
-        end,
-    })
-
-    -- Bufferline
-    use({
-		"akinsho/bufferline.nvim",
-		after = "nvim-web-devicons",
-        event = "BufWinEnter",
-		config = function()
-			require("plugins.configs.bufferline")
-		end,
-	})
-
-    -- Treesitter for better syntax highlighting
-    use({
-		"nvim-treesitter/nvim-treesitter",
-		run = ":TSUpdate",
-        event = "BufWinEnter",
-		config = function()
-			require("plugins.configs.treesitter")
-		end,
-	})
-
-    use ({
-        'windwp/nvim-ts-autotag',
-        event = "InsertEnter",
-        after = "nvim-treesitter",
-        config = function()
-			require("nvim-ts-autotag").setup()
-		end,
-    })
-
-    use ({ "p00f/nvim-ts-rainbow",
-        after = "nvim-treesitter" 
-    })
-
-    use ({
-        'windwp/nvim-autopairs',
-        config = function()
-			require("plugins.configs.autopairs")
-		end,
-    })
-
-
-    -- Auto Install LSP server
-    use({
-		"williamboman/nvim-lsp-installer",
-		config = function()
-			require("plugins.lsp")
-		end,
-	})
-
-    -- Language Server
-    use {'neovim/nvim-lspconfig'}
-
-    -- LSP source for nvim-cmp
-    use {'hrsh7th/cmp-nvim-lsp'}
-    use {'hrsh7th/cmp-buffer'}
-    -- Autocompletion plugin
-    use({
-		"hrsh7th/nvim-cmp",
-		config = function()
-			require("plugins.configs.cmp")
-		end,
-	})
-    -- pictogram for completion menu
-    use 'onsails/lspkind-nvim'
-
-    use {"tamago324/nlsp-settings.nvim" }
-	use {"hrsh7th/cmp-path"}
-	use {"hrsh7th/cmp-cmdline"}
-	use {"dmitmel/cmp-cmdline-history"}
-    use {"hrsh7th/cmp-emoji"}	
-	use {"hrsh7th/cmp-calc"}	
-	use {"hrsh7th/cmp-nvim-lsp-signature-help"}	
-
-    use {"jose-elias-alvarez/null-ls.nvim" }
-    use {'saadparwaiz1/cmp_luasnip'} 
-    use {'L3MON4D3/LuaSnip'} 
-	
-
-    -- Colorize
-	use({
-		"norcalli/nvim-colorizer.lua",
-        event = "BufRead",
-		config = function()
-			require("plugins.configs.colorizer")
-		end,
-	})
-
-    use({
-		"lukas-reineke/indent-blankline.nvim",
-		event = "BufRead",
-		config = function()
-			require("plugins.configs.indentline")
-		end,
-	})
-
-
-    -- Git sign
-    use({
-		"lewis6991/gitsigns.nvim",
-		event = "BufRead",
-		config = function()
-			require("plugins.configs.gitsigns")
-		end,
-	})
-
-    use({
+    }  -- File Explorer
+    use {
 		"akinsho/toggleterm.nvim",
 		keys = { "<C-\\>" },
 		config = function()
@@ -211,33 +114,128 @@ return packer.startup(function(use)
 				shell = vim.o.shell,
 			})
 		end,
-	})
-
-    -- Comment toggler
-    use ({
-		"terrortylor/nvim-comment",
+	}  -- Floating terminal
+    use {
+		"lukas-reineke/indent-blankline.nvim",
+		event = "BufRead",
 		config = function()
-			require("plugins.configs.comment")
+			require("plugins.configs.indentline")
 		end,
-	})
+	}  -- Auto indent line
+    use {
+        "goolord/alpha-nvim",
+        config = function()
+            require("plugins.configs.alpha")
+        end,
+    }  -- Dashboard
+    use {
+        "windwp/nvim-ts-autotag",
+        event = "InsertEnter",
+        after = "nvim-treesitter",
+        config = function()
+			require("nvim-ts-autotag").setup()
+		end,
+    }  -- AutoClose and AutoRename HTML tag using Treesitter
+    use {
+        "p00f/nvim-ts-rainbow",
+        after = "nvim-treesitter" 
+    }  -- Rainbow parantheses using tree-sitter
+	use {
+		"norcalli/nvim-colorizer.lua",
+        event = "BufRead",
+		config = function()
+			require("plugins.configs.colorizer")
+		end,
+	}  -- Colorize
 
 
-    -- List diagonastics of your code
-    use {"folke/trouble.nvim"}
+    -- Colorschemes 
+    use { "ellisonleao/gruvbox.nvim" }
     
-    -- Generate better annotation
-    use {"danymat/neogen"}
 
-    use({
+    -- Treesitter for better syntax highlighting
+    use {
+		"nvim-treesitter/nvim-treesitter",
+		run = ":TSUpdate",
+        event = "BufWinEnter",
+		config = function()
+			require("plugins.configs.treesitter")
+		end,
+	}
+
+
+    -- cmp plugins
+    use {
+		"hrsh7th/nvim-cmp",
+		config = function()
+			require("plugins.configs.cmp")
+		end,
+	}  -- The completion plugin
+    use { "hrsh7th/cmp-buffer" }  -- Buffer Completions
+	use { "hrsh7th/cmp-path" }  -- Path completions
+    use { "saadparwaiz1/cmp_luasnip" }  -- snippet completion
+    use { "hrsh7th/cmp-nvim-lsp"}  -- LSP source for nvim-cmp
+	use {"hrsh7th/cmp-cmdline"}
+	use {"dmitmel/cmp-cmdline-history"}
+    use {"hrsh7th/cmp-emoji"}	
+	use {"hrsh7th/cmp-calc"}	
+	use {"hrsh7th/cmp-nvim-lsp-signature-help"}	
+
+
+    -- Snippets
+    use { "L3MON4D3/LuaSnip" } 
+
+
+    -- Lnaguage Server related Plugins
+    use { "neovim/nvim-lspconfig" }  -- enable Language Server Protocol
+    use {
+		"williamboman/nvim-lsp-installer",
+		config = function()
+			require("plugins.lsp")
+		end,
+	}  -- Auto Install LSP server
+    use { "jose-elias-alvarez/null-ls.nvim" } -- Formatters and Linters
+    use { "RRethy/vim-illuminate" }  -- Highlight similar words under cursor
+    use { "simrat39/rust-tools.nvim" }
+    use {"folke/trouble.nvim"}  -- List diagonastics of your code
+
+
+    -- Telescope
+    use {
 		"nvim-telescope/telescope.nvim",
 		after = "neo-tree.nvim",
         cmd = "Telescope",
 		config = function()
 			require("plugins.configs.telescope")
 		end,
-	})
+	}
 
+
+    -- Git 
+    use {
+		"lewis6991/gitsigns.nvim",
+		event = "BufRead",
+		config = function()
+			require("plugins.configs.gitsigns")
+		end,
+	}
+
+
+    -- DAP
+    use { "mfussenegger/nvim-dap" }
+    use { "rcarriga/nvim-dap-ui" }
+    use { "ravenxrz/DAPInstall.nvim" }
+
+
+    -- pictogram for completion menu
+    use { "onsails/lspkind-nvim" }
+
+    use {"tamago324/nlsp-settings.nvim" }
+
+
+    -- Automatically set up your configuration after cloning packer.nvim
+    -- Always at the end, after all the plugins
     if PACKER_BOOTSTRAP then
 		  require("packer").sync()
-	  end
+    end
 end)
