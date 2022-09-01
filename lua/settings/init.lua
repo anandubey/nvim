@@ -3,6 +3,7 @@ local opt = vim.opt
 
 require("settings.disable_builtin")
 opt.backup = false
+opt.clipboard = "unnamedplus"
 opt.cmdheight = 1
 opt.completeopt = "menuone,noselect"
 opt.conceallevel = 0
@@ -72,3 +73,10 @@ opt.foldexpr = "nvim_treesitter#foldexpr()"
 -- 	vertright = "╠",
 -- 	verthoriz = "╬",
 -- }
+
+
+if vim.g.vscode then
+     -- VSCode extension
+    vim.cmd('source' .. '$HOME/.config/nvim-code/vscode/settings.vim')
+    vim.cmd('source' .. '$HOME/.config/nvim-code/plug-config/easymotion.vim')
+end

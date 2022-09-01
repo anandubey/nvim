@@ -10,7 +10,6 @@ if not snip_status_ok then
 end
 
 local types = require("cmp.types")
-local neogen = require("plugins.configs.neogen")
 
 local cmp_autopairs = require("nvim-autopairs.completion.cmp")
 cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done({ map_char = { tex = "" } }))
@@ -79,8 +78,6 @@ local mapping = {
 			cmp.select_next_item({ behavior = cmp.SelectBehavior.Insert })
 		elseif luasnip.jumpable(1) then
 			luasnip.jump(1)
-		elseif neogen.jumpable(1) then
-			neogen.jump_next()
 		else
 			fallback()
 		end
@@ -95,8 +92,6 @@ local mapping = {
 			cmp.select_prev_item({ behavior = cmp.SelectBehavior.Insert })
 		elseif luasnip.jumpable(-1) then
 			luasnip.jump(-1)
-		elseif neogen.jumpable(-1) then
-			vim.fn.feedkeys(t("<cmd>lua require('neogen').jump_prev()<CR>"), "")
 		else
 			fallback()
 		end
@@ -142,8 +137,6 @@ local mapping = {
 	["<C-l>"] = cmp.mapping(function(fallback)
 		if luasnip.choice_active() then
 			require("luasnip").change_choice(1)
-		elseif neogen.jumpable() then
-			vim.fn.feedkeys(t("<cmd>lua require('neogen').jump_next()<CR>"), "")
 		else
 			fallback()
 		end
@@ -154,8 +147,6 @@ local mapping = {
 	["<C-h>"] = cmp.mapping(function(fallback)
 		if luasnip.choice_active() then
 			require("luasnip").change_choice(-1)
-		elseif neogen.jumpable(-1) then
-			vim.fn.feedkeys(t("<cmd>lua require('neogen').jump_prev()<CR>"), "")
 		else
 			fallback()
 		end

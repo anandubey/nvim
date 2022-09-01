@@ -65,11 +65,17 @@ return packer.startup(function(use)
 			require("plugins.configs.autopairs")
 		end,
     }) -- generate autopairs
-    use { "numToStr/Comment.nvim" }  -- Better way to comment 
+    use { 
+        "numToStr/Comment.nvim",
+        config = function()
+			require("plugins.configs.comment")
+		end,
+    }  -- Better way to comment 
     use { "kyazdani42/nvim-web-devicons" }  -- File Icons
     use({
 		"akinsho/bufferline.nvim",
 		after = "nvim-web-devicons",
+        tag = "v2.*",
         event = "BufWinEnter",
 		config = function()
 			require("plugins.configs.bufferline")
@@ -97,22 +103,8 @@ return packer.startup(function(use)
     }  -- File Explorer
     use {
 		"akinsho/toggleterm.nvim",
-		keys = { "<C-\\>" },
 		config = function()
-			require("toggleterm").setup({
-				size = 20,
-				open_mapping = [[<c-\>]],
-				hide_numbers = true,
-				shade_filetypes = {},
-				shade_terminals = true,
-				shading_factor = 1,
-				start_in_insert = true,
-				insert_mappings = false,
-				persist_size = true,
-				direction = 'float',
-				close_on_exit = true,
-				shell = vim.o.shell,
-			})
+            require("plugins.configs.toggleterm")
 		end,
 	}  -- Floating terminal
     use {
@@ -147,10 +139,17 @@ return packer.startup(function(use)
 			require("plugins.configs.colorizer")
 		end,
 	}  -- Colorize
+    use {
+        "Pocco81/true-zen.nvim",
+        config = function()
+            require("plugins.configs.zenmode")
+        end,
+    }
 
 
     -- Colorschemes 
     use { "ellisonleao/gruvbox.nvim" }
+    -- use {'shaunsingh/oxocarbon.nvim', run = './install.sh'}
     
 
     -- Treesitter for better syntax highlighting
@@ -195,7 +194,14 @@ return packer.startup(function(use)
 		end,
 	}  -- Auto Install LSP server
     use { "jose-elias-alvarez/null-ls.nvim" } -- Formatters and Linters
-    use { "RRethy/vim-illuminate" }  -- Highlight similar words under cursor
+    use { 
+        "RRethy/vim-illuminate",
+		config = function()
+            vim.g.Illuminate_ftblacklist = {'alpha', 'NvimTree'}
+            vim.api.nvim_set_keymap('n', '<a-n>', '<cmd>lua require"illuminate".next_reference{wrap=true}<cr>', {noremap=true})
+            vim.api.nvim_set_keymap('n', '<a-p>', '<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>', {noremap=true})
+		end,
+    }  -- Highlight similar words under cursor
     use { "simrat39/rust-tools.nvim" }
     use {"folke/trouble.nvim"}  -- List diagonastics of your code
 
