@@ -36,8 +36,8 @@ vim.keymap.set({ "n", "x", "o" }, "H", "^", opts)
 vim.keymap.set({ "n", "x", "o" }, "L", "g_", opts)
 
 -- Navigate buffers
-vim.keymap.set("n", "<Right>", ":bnext<CR>", opts)
-vim.keymap.set("n", "<Left>", ":bprevious<CR>", opts)
+vim.keymap.set("n", "<Tab>", ":bnext<CR>", opts)
+vim.keymap.set("n", "<S-Tab>", ":bprevious<CR>", opts)
 
 -- Panes resizing
 vim.keymap.set("n", "+", ":vertical resize +5<CR>")
@@ -73,7 +73,7 @@ vim.keymap.set("n", "<C-a>", "ggVG", opts)
 
 -- write file in current directory
 -- :w %:h/<new-file-name>
-vim.keymap.set("n", "<C-n>", ":w %:h/", opts)
+vim.keymap.set("n", "<C-s>", ":w %:h/", opts)
 
 -- delete forward
 -- w{number}dw
@@ -81,6 +81,8 @@ vim.keymap.set("n", "<C-n>", ":w %:h/", opts)
 -- w{number}db
 
 vim.keymap.set("n", "<Esc>", ":nohlsearch<CR>", opts)
+
+vim.keymap.set("n", "<Leader>zz", ":ZenMode<CR>", opts)
 
 -- ctrl + x to cut full line
 vim.keymap.set("n", "<C-x>", "dd", opts)
