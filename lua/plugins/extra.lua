@@ -77,16 +77,18 @@ return {
     -- Indent guide for Neovim
     {
         "lukas-reineke/indent-blankline.nvim",
-        -- enabled = false,
-        event = { "BufReadPost", "BufNewFile" },
-        version = "2.1.0",
-        opts = {
-            char = "┊",
-            -- char = "│",
-            filetype_exclude = { "help", "alpha", "dashboard", "neo-tree", "Trouble", "lazy" },
-            show_trailing_blankline_indent = false,
-            show_current_context = false,
-        },
+        main = "ibl",
+        ---@module "ibl"
+        ---@type ibl.config
+        -- opts = {
+        --     indent = { char = "│", highlight = "IblChar" },
+        --     scope = { char = "│", highlight = "IblScopeChar" },
+        -- },
+        config = function(_, _)
+            local hooks = require "ibl.hooks"
+            hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
+            require("ibl").setup()
+        end
     },
     {
         "utilyre/barbecue.nvim",
@@ -105,7 +107,7 @@ return {
             })
 
             vim.api.nvim_create_autocmd({
-                "WinScrolled", -- or WinResized on NVIM-v0.9 and higher
+                "WinResized", -- or WinResized on NVIM-v0.9 and higher
                 "BufWinEnter",
                 "CursorHold",
                 "InsertLeave",
