@@ -64,7 +64,7 @@ vim.opt.inccommand = 'split'
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 vim.schedule(function()
-  vim.opt.clipboard = 'unnamedplus'
+    vim.opt.clipboard = 'unnamedplus'
 end)
 
 -- Minimal number of screen lines to keep above and below the cursor.
