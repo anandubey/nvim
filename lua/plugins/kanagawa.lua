@@ -7,6 +7,7 @@ return {
                 dark = "dragon",
                 light = "lotus"
             },
+            transparent = true,
             overrides=function(colors)
                 return {
                     ["@markup.link.url.markdown_inline"] = { link = "Special" }, -- (url)
