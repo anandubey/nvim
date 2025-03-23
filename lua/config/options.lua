@@ -71,6 +71,6 @@ end)
 vim.opt.scrolloff = 10
 
 -- Disable cmdline until it's needed
--- vim.opt.cmdheight = 0
+vim.opt.cmdheight = 0
 
 
